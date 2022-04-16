@@ -2,8 +2,7 @@ name: CI to GHCR
 
 on:
   push:
-    tags:
-      - "v*.*.*"
+    branches: [master]
 
 jobs:
   
@@ -25,7 +24,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - if: github.event_name != 'pull_request'
+      - name: Login to ghcr
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
